@@ -16,12 +16,11 @@
         <!-- Top Bar -->
         <div class="h-12 bg-white border-b border-gray-200 flex items-center justify-between px-4 lg:px-6 shrink-0">
             <div class="flex items-center gap-4">
-                <a href="{{ route('dashboard') }}" class="flex items-center gap-2 text-gray-600 hover:text-indigo-600 transition-colors" title="Kembali ke Dashboard">
-                    <div class="w-8 h-8 bg-gray-100 hover:bg-indigo-100 rounded-lg flex items-center justify-center transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                    </div>
+                <a href="{{ route('dashboard') }}" class="flex items-center gap-2 px-3 py-1.5 bg-gray-100 hover:bg-indigo-100 hover:text-indigo-600 text-gray-700 rounded-lg transition-all font-medium text-sm" title="Kembali ke Dashboard">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    <span class="hidden sm:inline">Kembali</span>
                 </a>
                 <div class="flex items-center gap-2">
                     <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
