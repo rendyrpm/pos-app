@@ -33,7 +33,7 @@
                             <p class="mt-1 text-lg font-semibold text-gray-900">{{ $product->barcode ?? '-' }}</p>
                         </div>
                         <div>
-                            <h3 class="text-sm font-medium text-gray-500">Harga Beli</h3>
+                            <h3 class="text-sm font-medium text-gray-500">Harga Beli / HPP</h3>
                             <p class="mt-1 text-lg font-semibold text-gray-900">Rp {{ number_format($product->buy_price, 0, ',', '.') }}</p>
                         </div>
                         <div>
