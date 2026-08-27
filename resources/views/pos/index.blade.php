@@ -126,11 +126,11 @@
             </div>
 
             <!-- Cart Items -->
-            <div class="flex-1 overflow-y-auto min-h-0">
+            <div class="flex-1 overflow-y-auto min-h-0 bg-gray-50/50">
                 <!-- Empty Cart -->
                 <div x-show="cart.length === 0" class="flex flex-col items-center justify-center h-full text-center px-4 py-8">
-                    <div class="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-3">
-                        <svg class="w-7 h-7 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-3">
+                        <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
                         </svg>
                     </div>
@@ -139,30 +139,30 @@
                 </div>
 
                 <!-- Cart Item List -->
-                <div class="divide-y divide-gray-50">
+                <div class="p-2 space-y-2">
                     <template x-for="(item, index) in cart" :key="item.product.id">
-                        <div class="px-4 py-3 hover:bg-gray-50/50 transition-colors">
-                            <div class="flex items-start gap-3">
+                        <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+                            <div class="flex items-start justify-between gap-2">
                                 <!-- Product Info -->
                                 <div class="flex-1 min-w-0">
-                                    <h4 class="text-sm font-semibold text-gray-800 truncate" x-text="item.product.name"></h4>
-                                    <p class="text-xs text-gray-400 mt-0.5">
+                                    <h4 class="text-sm font-semibold text-gray-800 truncate leading-tight" x-text="item.product.name"></h4>
+                                    <p class="text-xs text-gray-400 mt-1">
                                         Rp<span x-text="formatNumber(item.product.sell_price)"></span> / <span x-text="item.product.unit"></span>
                                     </p>
                                 </div>
 
                                 <!-- Subtotal -->
-                                <div class="text-sm font-bold text-gray-800 shrink-0">
+                                <div class="text-sm font-bold text-indigo-600 shrink-0">
                                     Rp<span x-text="formatNumber(item.subtotal)"></span>
                                 </div>
                             </div>
 
-                            <!-- Quantity Controls -->
-                            <div class="flex items-center justify-between mt-2">
-                                <div class="flex items-center gap-0">
+                            <!-- Quantity Controls & Delete -->
+                            <div class="flex items-center justify-between mt-2.5 pt-2.5 border-t border-gray-100">
+                                <div class="flex items-center gap-0 bg-gray-50 rounded-lg p-0.5">
                                     <button
                                         @click="decrementQty(index)"
-                                        class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95 transition-all text-lg font-bold"
+                                        class="w-8 h-8 flex items-center justify-center rounded-md bg-white text-gray-600 hover:bg-gray-100 active:scale-95 transition-all text-lg font-bold shadow-sm"
                                     >-</button>
                                     <input
                                         type="number"
@@ -174,13 +174,13 @@
                                     >
                                     <button
                                         @click="incrementQty(index)"
-                                        class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95 transition-all text-lg font-bold"
+                                        class="w-8 h-8 flex items-center justify-center rounded-md bg-white text-gray-600 hover:bg-gray-100 active:scale-95 transition-all text-lg font-bold shadow-sm"
                                         :class="{ 'opacity-30 cursor-not-allowed': item.quantity >= item.product.stock }"
                                     >+</button>
                                 </div>
                                 <button
                                     @click="removeFromCart(index)"
-                                    class="text-gray-400 hover:text-red-500 p-1.5 rounded-lg hover:bg-red-50 transition-colors"
+                                    class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                                 >
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -193,9 +193,9 @@
             </div>
 
             <!-- ==================== PAYMENT SECTION ==================== -->
-            <div class="border-t border-gray-200 bg-gray-50 shrink-0" x-show="cart.length > 0">
+            <div class="border-t border-gray-200 bg-white shrink-0" x-show="cart.length > 0">
                 <!-- Summary -->
-                <div class="px-4 pt-3 pb-2 space-y-1.5">
+                <div class="px-4 pt-3 pb-2 space-y-2">
                     <div class="flex justify-between text-sm">
                         <span class="text-gray-500">Subtotal</span>
                         <span class="font-medium text-gray-700">Rp <span x-text="formatNumber(subtotal)"></span></span>
@@ -209,11 +209,11 @@
                                 x-model.number="discount"
                                 @input="calculateTotal()"
                                 min="0"
-                                class="w-24 text-right text-sm border border-gray-200 rounded-lg px-2 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                class="w-24 text-right text-sm border border-gray-200 rounded-lg px-2 py-1 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:bg-white"
                             >
                         </div>
                     </div>
-                    <div class="flex justify-between items-baseline pt-2 border-t border-gray-200">
+                    <div class="flex justify-between items-baseline pt-2 border-t border-gray-100">
                         <span class="text-base font-bold text-gray-800">Total</span>
                         <span class="text-2xl font-extrabold text-indigo-600">Rp <span x-text="formatNumber(total)"></span></span>
                     </div>
@@ -255,23 +255,23 @@
                                 @input="calculateChange()"
                                 min="0"
                                 placeholder="0"
-                                class="block w-full pl-10 pr-4 py-3 text-lg font-bold border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                class="block w-full pl-10 pr-4 py-3 text-lg font-bold border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:bg-white transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             >
                         </div>
                     </div>
 
                     <!-- Quick Amount Buttons -->
                     <div class="grid grid-cols-4 gap-1.5">
-                        <button @click="setPaymentExact()" class="px-2 py-2 text-xs font-semibold bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100 active:scale-95 transition-all">
+                        <button @click="setPaymentExact()" class="px-2 py-2 text-xs font-semibold bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100 active:scale-95 transition-all border border-indigo-100">
                             Uang Pas
                         </button>
-                        <button @click="setPayment(50000)" class="px-2 py-2 text-xs font-semibold bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 active:scale-95 transition-all">
+                        <button @click="setPayment(50000)" class="px-2 py-2 text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
                             50.000
                         </button>
-                        <button @click="setPayment(100000)" class="px-2 py-2 text-xs font-semibold bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 active:scale-95 transition-all">
+                        <button @click="setPayment(100000)" class="px-2 py-2 text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
                             100.000
                         </button>
-                        <button @click="setPayment(200000)" class="px-2 py-2 text-xs font-semibold bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 active:scale-95 transition-all">
+                        <button @click="setPayment(200000)" class="px-2 py-2 text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
                             200.000
                         </button>
                     </div>
@@ -279,8 +279,8 @@
                     <!-- Change & Pay Button -->
                     <div class="flex items-center gap-3">
                         <!-- Change Display -->
-                        <div class="flex-1 text-center py-2 rounded-xl"
-                             :class="payment >= total && payment > 0 ? 'bg-green-50' : 'bg-gray-100'">
+                        <div class="flex-1 text-center py-2.5 rounded-xl"
+                             :class="payment >= total && payment > 0 ? 'bg-green-50 border border-green-200' : 'bg-gray-50 border border-gray-200'">
                             <div class="text-[10px] uppercase tracking-wide font-semibold"
                                  :class="payment >= total && payment > 0 ? 'text-green-600' : 'text-gray-400'">
                                 Kembalian
@@ -303,19 +303,19 @@
                 </div>
 
                 <!-- QRIS Payment (QR Code display) -->
-                <div class="px-4 pb-3 space-y-3" x-show="paymentMethod === 'qris'">
-                    <div class="bg-white rounded-xl border border-gray-200 p-4 text-center">
+                <div class="px-4 pb-4 space-y-3" x-show="paymentMethod === 'qris'">
+                    <div class="bg-gray-50 rounded-xl border border-gray-200 p-4 text-center">
                         <div class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Scan QRIS</div>
-                        <div class="inline-block p-3 bg-white rounded-lg shadow-sm border border-gray-100">
+                        <div class="inline-block p-3 bg-white rounded-xl shadow-sm border border-gray-100">
                             <div x-show="total > 0" x-ref="qrCode" class="w-[180px] h-[180px] flex items-center justify-center">
                                 <span class="text-gray-400 text-sm">Memuat QR...</span>
                             </div>
-                            <div x-show="total <= 0" class="w-[180px] h-[180px] flex items-center justify-center bg-gray-50 rounded">
+                            <div x-show="total <= 0" class="w-[180px] h-[180px] flex items-center justify-center bg-gray-50 rounded-lg">
                                 <span class="text-gray-400 text-sm">Tambah produk</span>
                             </div>
                         </div>
                         <div class="mt-3 text-xs text-gray-400">
-                            Merchant: <span class="font-semibold text-gray-600">{{ config('qris.merchant_name', 'POS App') }}</span>
+                            <span class="font-semibold text-gray-600">{{ config('qris.merchant_name', 'POS App') }}</span>
                         </div>
                         <div class="text-lg font-extrabold text-blue-600 mt-1">
                             Rp <span x-text="formatNumber(total)"></span>
