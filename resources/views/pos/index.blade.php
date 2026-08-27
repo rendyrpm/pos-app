@@ -303,21 +303,21 @@
                 </div>
 
                 <!-- QRIS Payment (QR Code display) -->
-                <div class="px-4 pb-4 space-y-3" x-show="paymentMethod === 'qris'">
-                    <div class="bg-gray-50 rounded-xl border border-gray-200 p-3 sm:p-4 text-center">
-                        <div class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 sm:mb-3">Scan QRIS</div>
-                        <div class="inline-block p-2 sm:p-3 bg-white rounded-xl shadow-sm border border-gray-100">
-                            <div x-show="total > 0" x-ref="qrCode" class="w-[150px] h-[150px] sm:w-[180px] sm:h-[180px] flex items-center justify-center">
-                                <span class="text-gray-400 text-sm">Memuat QR...</span>
+                <div class="px-3 sm:px-4 pb-3 sm:pb-4 space-y-2 sm:space-y-3" x-show="paymentMethod === 'qris'">
+                    <div class="bg-gray-50 rounded-xl border border-gray-200 p-2.5 sm:p-4 text-center">
+                        <div class="text-[11px] sm:text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5 sm:mb-3">Scan QRIS</div>
+                        <div class="inline-block p-1.5 sm:p-3 bg-white rounded-xl shadow-sm border border-gray-100">
+                            <div x-show="total > 0" x-ref="qrCode" class="w-[120px] h-[120px] sm:w-[180px] sm:h-[180px] flex items-center justify-center">
+                                <span class="text-gray-400 text-xs sm:text-sm">Memuat QR...</span>
                             </div>
-                            <div x-show="total <= 0" class="w-[150px] h-[150px] sm:w-[180px] sm:h-[180px] flex items-center justify-center bg-gray-50 rounded-lg">
-                                <span class="text-gray-400 text-sm">Tambah produk</span>
+                            <div x-show="total <= 0" class="w-[120px] h-[120px] sm:w-[180px] sm:h-[180px] flex items-center justify-center bg-gray-50 rounded-lg">
+                                <span class="text-gray-400 text-xs sm:text-sm">Tambah produk</span>
                             </div>
                         </div>
-                        <div class="mt-2 sm:mt-3 text-xs text-gray-400">
+                        <div class="mt-1.5 sm:mt-3 text-[11px] sm:text-xs text-gray-400">
                             <span class="font-semibold text-gray-600">{{ config('qris.merchant_name', 'POS App') }}</span>
                         </div>
-                        <div class="text-lg font-extrabold text-blue-600 mt-1">
+                        <div class="text-base sm:text-lg font-extrabold text-blue-600 mt-0.5 sm:mt-1">
                             Rp <span x-text="formatNumber(total)"></span>
                         </div>
                     </div>
@@ -326,7 +326,7 @@
                     <button
                         @click="checkout()"
                         :disabled="cart.length === 0"
-                        class="w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-extrabold text-lg rounded-xl transition-all active:scale-[0.97] shadow-lg shadow-blue-600/20 disabled:shadow-none"
+                        class="w-full py-3 sm:py-4 px-4 sm:px-6 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-extrabold text-sm sm:text-lg rounded-xl transition-all active:scale-[0.97] shadow-lg shadow-blue-600/20 disabled:shadow-none"
                     >
                         Konfirmasi Pembayaran QRIS
                     </button>
