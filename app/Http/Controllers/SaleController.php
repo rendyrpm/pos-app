@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sale;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
@@ -39,5 +40,24 @@ class SaleController extends Controller
     {
         $sale->load('items.product', 'user');
         return view('sales.receipt', compact('sale'));
+    }
+
+    public function destroy(Sale $sale)
+    {
+        DB::transaction(function () use ($sale) {
+            // Kembalikan stok produk
+            foreach ($sale->items as $item) {
+                $item->product->increment('stock', $item->quantity);
+            }
+
+            // Hapus item transaksi
+            $sale->items()->delete();
+
+            // Hapus transaksi
+            $sale->delete();
+        });
+
+        return redirect()->route('sales.index')
+            ->with('success', 'Transaksi berhasil dihapus dan stok telah dikembalikan.');
     }
 }

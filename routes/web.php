@@ -44,6 +44,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
         Route::get('/monthly', [ReportController::class, 'monthly'])->name('monthly');
         Route::get('/products', [ReportController::class, 'products'])->name('products');
     });
+
+    // Hapus transaksi (admin only)
+    Route::delete('/sales/{sale}', [SaleController::class, 'destroy'])->name('sales.destroy');
 });
 
 // Profile routes

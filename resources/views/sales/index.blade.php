@@ -114,7 +114,16 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="{{ route('sales.receipt', $sale) }}" class="text-indigo-600 hover:text-indigo-900" target="_blank">Struk</a>
+                                        <div class="flex items-center gap-2">
+                                            <a href="{{ route('sales.receipt', $sale) }}" class="text-indigo-600 hover:text-indigo-900" target="_blank">Struk</a>
+                                            @if(auth()->user()->role === 'admin')
+                                                <form action="{{ route('sales.destroy', $sale) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus transaksi {{ $sale->transaction_number }}? Stok produk akan dikembalikan.')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-600 hover:text-red-900 font-medium">Hapus</button>
+                                                </form>
+                                            @endif
+                                        </div>
                                     </td>
                                 </tr>
                                 @empty
