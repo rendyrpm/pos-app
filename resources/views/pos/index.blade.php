@@ -99,10 +99,10 @@
 
         <!-- ==================== RIGHT PANEL: CART ==================== -->
         <div class="w-full lg:w-[380px] xl:w-[420px] bg-white border-t lg:border-t-0 lg:border-l border-gray-200 flex flex-col shrink-0"
-             :class="{ 'h-[45vh] lg:h-full': cart.length > 0, 'h-auto lg:h-full': cart.length === 0 }">
+             :class="{ 'h-[50vh] sm:h-[45vh] lg:h-full': cart.length > 0, 'h-auto lg:h-full': cart.length === 0 }">
 
             <!-- Cart Header -->
-            <div class="px-4 py-3 border-b border-gray-100 flex items-center justify-between shrink-0">
+            <div class="px-4 py-3 border-b border-gray-100 flex items-center justify-between shrink-0 bg-white">
                 <div class="flex items-center gap-2">
                     <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center">
                         <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,7 +193,7 @@
             </div>
 
             <!-- ==================== PAYMENT SECTION ==================== -->
-            <div class="border-t border-gray-200 bg-white shrink-0" x-show="cart.length > 0">
+            <div class="border-t border-gray-200 bg-white lg:shrink-0" x-show="cart.length > 0">
                 <!-- Summary -->
                 <div class="px-4 pt-3 pb-2 space-y-2">
                     <div class="flex justify-between text-sm">
@@ -243,7 +243,7 @@
                 </div>
 
                 <!-- Payment Input (Cash only) -->
-                <div class="px-4 pb-3 space-y-3" x-show="paymentMethod === 'cash'">
+                <div class="px-4 pb-3 space-y-2 sm:space-y-3" x-show="paymentMethod === 'cash'">
                     <div>
                         <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5 block">Pembayaran</label>
                         <div class="relative">
@@ -255,37 +255,37 @@
                                 @input="calculateChange()"
                                 min="0"
                                 placeholder="0"
-                                class="block w-full pl-10 pr-4 py-3 text-lg font-bold border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:bg-white transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                class="block w-full pl-10 pr-4 py-2.5 sm:py-3 text-lg font-bold border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:bg-white transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             >
                         </div>
                     </div>
 
                     <!-- Quick Amount Buttons -->
                     <div class="grid grid-cols-4 gap-1.5">
-                        <button @click="setPaymentExact()" class="px-2 py-2 text-xs font-semibold bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100 active:scale-95 transition-all border border-indigo-100">
+                        <button @click="setPaymentExact()" class="px-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100 active:scale-95 transition-all border border-indigo-100">
                             Uang Pas
                         </button>
-                        <button @click="setPayment(50000)" class="px-2 py-2 text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
+                        <button @click="setPayment(50000)" class="px-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
                             50.000
                         </button>
-                        <button @click="setPayment(100000)" class="px-2 py-2 text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
+                        <button @click="setPayment(100000)" class="px-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
                             100.000
                         </button>
-                        <button @click="setPayment(200000)" class="px-2 py-2 text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
+                        <button @click="setPayment(200000)" class="px-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
                             200.000
                         </button>
                     </div>
 
                     <!-- Change & Pay Button -->
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2 sm:gap-3">
                         <!-- Change Display -->
-                        <div class="flex-1 text-center py-2.5 rounded-xl"
+                        <div class="flex-1 text-center py-2 rounded-xl"
                              :class="payment >= total && payment > 0 ? 'bg-green-50 border border-green-200' : 'bg-gray-50 border border-gray-200'">
                             <div class="text-[10px] uppercase tracking-wide font-semibold"
                                  :class="payment >= total && payment > 0 ? 'text-green-600' : 'text-gray-400'">
                                 Kembalian
                             </div>
-                            <div class="text-lg font-extrabold"
+                            <div class="text-base sm:text-lg font-extrabold"
                                  :class="payment >= total && payment > 0 ? 'text-green-600' : 'text-gray-400'">
                                 Rp <span x-text="formatNumber(change)"></span>
                             </div>
@@ -295,7 +295,7 @@
                         <button
                             @click="checkout()"
                             :disabled="cart.length === 0 || payment < total"
-                            class="flex-1 py-4 px-6 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-extrabold text-lg rounded-xl transition-all active:scale-[0.97] shadow-lg shadow-green-600/20 disabled:shadow-none"
+                            class="flex-1 py-3 sm:py-4 px-4 sm:px-6 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-extrabold text-base sm:text-lg rounded-xl transition-all active:scale-[0.97] shadow-lg shadow-green-600/20 disabled:shadow-none"
                         >
                             BAYAR
                         </button>
@@ -304,17 +304,17 @@
 
                 <!-- QRIS Payment (QR Code display) -->
                 <div class="px-4 pb-4 space-y-3" x-show="paymentMethod === 'qris'">
-                    <div class="bg-gray-50 rounded-xl border border-gray-200 p-4 text-center">
-                        <div class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Scan QRIS</div>
-                        <div class="inline-block p-3 bg-white rounded-xl shadow-sm border border-gray-100">
-                            <div x-show="total > 0" x-ref="qrCode" class="w-[180px] h-[180px] flex items-center justify-center">
+                    <div class="bg-gray-50 rounded-xl border border-gray-200 p-3 sm:p-4 text-center">
+                        <div class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 sm:mb-3">Scan QRIS</div>
+                        <div class="inline-block p-2 sm:p-3 bg-white rounded-xl shadow-sm border border-gray-100">
+                            <div x-show="total > 0" x-ref="qrCode" class="w-[150px] h-[150px] sm:w-[180px] sm:h-[180px] flex items-center justify-center">
                                 <span class="text-gray-400 text-sm">Memuat QR...</span>
                             </div>
-                            <div x-show="total <= 0" class="w-[180px] h-[180px] flex items-center justify-center bg-gray-50 rounded-lg">
+                            <div x-show="total <= 0" class="w-[150px] h-[150px] sm:w-[180px] sm:h-[180px] flex items-center justify-center bg-gray-50 rounded-lg">
                                 <span class="text-gray-400 text-sm">Tambah produk</span>
                             </div>
                         </div>
-                        <div class="mt-3 text-xs text-gray-400">
+                        <div class="mt-2 sm:mt-3 text-xs text-gray-400">
                             <span class="font-semibold text-gray-600">{{ config('qris.merchant_name', 'POS App') }}</span>
                         </div>
                         <div class="text-lg font-extrabold text-blue-600 mt-1">
