@@ -10,7 +10,13 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600;inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @php
+            $viteManifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
+            $cssFile = $viteManifest['resources/css/app.css']['file'] ?? '';
+            $jsFile = $viteManifest['resources/js/app.js']['file'] ?? '';
+        @endphp
+        <link rel="stylesheet" href="/build/{{ $cssFile }}">
+        <script type="module" src="/build/{{ $jsFile }}"></script>
     </head>
     <body class="font-sans antialiased bg-gray-50 overflow-hidden">
         <!-- Top Bar -->
