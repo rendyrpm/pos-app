@@ -30,7 +30,7 @@ class UserManagementTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->get('/users');
         $response->assertStatus(200);
-        $response->assertSee('Users');
+        $response->assertSee('Pengguna');
     }
 
     public function test_admin_can_view_create_user_form(): void

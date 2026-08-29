@@ -118,7 +118,7 @@
                 </div>
                 <button
                     x-show="cart.length > 0"
-                    @click="clearCart()"
+                    @click="if(confirm('Yakin ingin mengosongkan keranjang?')) clearCart()"
                     class="text-xs text-red-500 hover:text-red-700 font-medium px-2 py-1 rounded-lg hover:bg-red-50 transition-colors"
                 >
                     Kosongkan
@@ -209,6 +209,7 @@
                                 x-model.number="discount"
                                 @input="calculateTotal()"
                                 min="0"
+                                :max="subtotal"
                                 class="w-24 text-right text-sm border border-gray-200 rounded-lg px-2 py-1 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:bg-white"
                             >
                         </div>
@@ -294,10 +295,16 @@
                         <!-- Pay Button -->
                         <button
                             @click="checkout()"
-                            :disabled="cart.length === 0 || payment < total"
-                            class="flex-1 py-3 sm:py-4 px-4 sm:px-6 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-extrabold text-base sm:text-lg rounded-xl transition-all active:scale-[0.97] shadow-lg shadow-green-600/20 disabled:shadow-none"
+                            :disabled="cart.length === 0 || payment < total || processing"
+                            class="flex-1 py-3 sm:py-4 px-4 sm:px-6 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-extrabold text-base sm:text-lg rounded-xl transition-all active:scale-[0.97] shadow-lg shadow-green-600/20 disabled:shadow-none flex items-center justify-center gap-2"
                         >
-                            BAYAR
+                            <template x-if="processing">
+                                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                                </svg>
+                            </template>
+                            <span x-text="processing ? 'Memproses...' : 'BAYAR'"></span>
                         </button>
                     </div>
                 </div>
@@ -325,10 +332,16 @@
                     <!-- Confirm Payment Button -->
                     <button
                         @click="checkout()"
-                        :disabled="cart.length === 0"
-                        class="w-full py-3 sm:py-4 px-4 sm:px-6 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-extrabold text-sm sm:text-lg rounded-xl transition-all active:scale-[0.97] shadow-lg shadow-blue-600/20 disabled:shadow-none"
+                        :disabled="cart.length === 0 || processing"
+                        class="w-full py-3 sm:py-4 px-4 sm:px-6 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-extrabold text-sm sm:text-lg rounded-xl transition-all active:scale-[0.97] shadow-lg shadow-blue-600/20 disabled:shadow-none flex items-center justify-center gap-2"
                     >
-                        Konfirmasi Pembayaran QRIS
+                        <template x-if="processing">
+                            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                            </svg>
+                        </template>
+                        <span x-text="processing ? 'Memproses...' : 'Konfirmasi Pembayaran QRIS'"></span>
                     </button>
                 </div>
             </div>
@@ -355,10 +368,14 @@
                 x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
                 class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
-                @click.outside="closeReceipt()"
             >
                 <!-- Success Header -->
-                <div class="bg-green-50 px-6 py-8 text-center">
+                <div class="bg-green-50 px-6 py-8 text-center relative">
+                    <button @click="closeReceipt()" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-white/60 hover:bg-white text-gray-400 hover:text-gray-600 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                     <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 success-checkmark">
                         <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
@@ -453,6 +470,8 @@
                 paymentMethod: 'cash',
                 showReceipt: false,
                 receiptData: null,
+                lastReceipt: null,
+                processing: false,
 
                 init() {
                     this.calculateTotal();
@@ -615,8 +634,13 @@
                 },
 
                 async checkout() {
+                    if (this.processing) return;
                     if (this.cart.length === 0) {
                         showToast('Keranjang kosong!', 'error');
+                        return;
+                    }
+                    if (this.discount > this.subtotal) {
+                        showToast('Diskon tidak boleh melebihi subtotal!', 'error');
                         return;
                     }
                     // For cash, check payment amount; for QRIS, always valid
@@ -625,6 +649,7 @@
                         return;
                     }
 
+                    this.processing = true;
                     try {
                         const response = await fetch('{{ route("pos.checkout") }}', {
                             method: 'POST',
@@ -671,6 +696,8 @@
                     } catch (error) {
                         showToast('Terjadi kesalahan. Silakan coba lagi.', 'error');
                         console.error(error);
+                    } finally {
+                        this.processing = false;
                     }
                 },
 
@@ -715,6 +742,7 @@
 
                 closeReceipt() {
                     this.showReceipt = false;
+                    this.lastReceipt = this.receiptData;
                     this.receiptData = null;
                     this.$nextTick(() => {
                         document.getElementById('search-input')?.focus();

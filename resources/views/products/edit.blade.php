@@ -13,10 +13,21 @@
                         @csrf
                         @method('PUT')
 
+                        @if($errors->any())
+                            <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                                <p class="font-medium text-red-800 text-sm">Terdapat kesalahan pada form:</p>
+                                <ul class="mt-2 list-disc list-inside text-sm text-red-600">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label for="name" class="block text-sm font-medium text-gray-700">Nama Produk</label>
-                                <input type="text" name="name" id="name" value="{{ old('name', $product->name) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                                <input type="text" name="name" id="name" value="{{ old('name', $product->name) }}" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm {{ $errors->has('name') ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500' }}" required>
                                 @error('name')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -24,7 +35,7 @@
 
                             <div>
                                 <label for="category_id" class="block text-sm font-medium text-gray-700">Kategori</label>
-                                <select name="category_id" id="category_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                                <select name="category_id" id="category_id" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm {{ $errors->has('category_id') ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500' }}" required>
                                     <option value="">Pilih Kategori</option>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}" {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
@@ -39,7 +50,7 @@
 
                             <div>
                                 <label for="sku" class="block text-sm font-medium text-gray-700">SKU</label>
-                                <input type="text" name="sku" id="sku" value="{{ old('sku', $product->sku) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                                <input type="text" name="sku" id="sku" value="{{ old('sku', $product->sku) }}" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm {{ $errors->has('sku') ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500' }}" required>
                                 @error('sku')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -47,7 +58,7 @@
 
                             <div>
                                 <label for="barcode" class="block text-sm font-medium text-gray-700">Barcode</label>
-                                <input type="text" name="barcode" id="barcode" value="{{ old('barcode', $product->barcode) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                <input type="text" name="barcode" id="barcode" value="{{ old('barcode', $product->barcode) }}" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm {{ $errors->has('barcode') ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500' }}">
                                 @error('barcode')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -55,7 +66,7 @@
 
                             <div>
                                 <label for="buy_price" class="block text-sm font-medium text-gray-700">Harga Beli / HPP</label>
-                                <input type="number" name="buy_price" id="buy_price" value="{{ old('buy_price', $product->buy_price) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" min="0" required>
+                                <input type="number" name="buy_price" id="buy_price" value="{{ old('buy_price', $product->buy_price) }}" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm {{ $errors->has('buy_price') ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500' }}" min="0" required>
                                 @error('buy_price')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -63,7 +74,7 @@
 
                             <div>
                                 <label for="sell_price" class="block text-sm font-medium text-gray-700">Harga Jual</label>
-                                <input type="number" name="sell_price" id="sell_price" value="{{ old('sell_price', $product->sell_price) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" min="0" required>
+                                <input type="number" name="sell_price" id="sell_price" value="{{ old('sell_price', $product->sell_price) }}" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm {{ $errors->has('sell_price') ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500' }}" min="0" required>
                                 @error('sell_price')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -71,7 +82,7 @@
 
                             <div>
                                 <label for="stock" class="block text-sm font-medium text-gray-700">Stok</label>
-                                <input type="number" name="stock" id="stock" value="{{ old('stock', $product->stock) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" min="0" required>
+                                <input type="number" name="stock" id="stock" value="{{ old('stock', $product->stock) }}" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm {{ $errors->has('stock') ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500' }}" min="0" required>
                                 @error('stock')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -79,7 +90,7 @@
 
                             <div>
                                 <label for="unit" class="block text-sm font-medium text-gray-700">Satuan</label>
-                                <input type="text" name="unit" id="unit" value="{{ old('unit', $product->unit) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                                <input type="text" name="unit" id="unit" value="{{ old('unit', $product->unit) }}" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm {{ $errors->has('unit') ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500' }}" required>
                                 @error('unit')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -87,7 +98,7 @@
 
                             <div>
                                 <label for="min_stock" class="block text-sm font-medium text-gray-700">Minimum Stok</label>
-                                <input type="number" name="min_stock" id="min_stock" value="{{ old('min_stock', $product->min_stock) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" min="0" required>
+                                <input type="number" name="min_stock" id="min_stock" value="{{ old('min_stock', $product->min_stock) }}" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm {{ $errors->has('min_stock') ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500' }}" min="0" required>
                                 @error('min_stock')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -95,7 +106,7 @@
 
                             <div>
                                 <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
-                                <textarea name="description" id="description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">{{ old('description', $product->description) }}</textarea>
+                                <textarea name="description" id="description" rows="3" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm {{ $errors->has('description') ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500' }}">{{ old('description', $product->description) }}</textarea>
                                 @error('description')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -105,7 +116,7 @@
                         <div class="mb-4 mt-6">
                             <label class="flex items-center">
                                 <input type="hidden" name="is_active" value="0">
-                                <input type="checkbox" name="is_active" value="1" {{ old('is_active', $product->is_active) ? 'checked' : '' }} class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
+                                <input type="checkbox" name="is_active" value="1" {{ old('is_active', $product->is_active) ? 'checked' : '' }} class="rounded {{ $errors->has('is_active') ? 'border-red-300' : 'border-gray-300' }} text-indigo-600 shadow-sm focus:ring-indigo-500">
                                 <span class="ms-2 text-sm text-gray-600">Aktif</span>
                             </label>
                         </div>

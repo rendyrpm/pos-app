@@ -55,7 +55,7 @@
                     <span class="text-sm font-medium text-gray-700 hidden sm:inline">{{ Auth::user()->name }}</span>
                 </div>
 
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" onsubmit="event.preventDefault(); if(confirm('Yakin ingin keluar? Semua data keranjang yang belum tersimpan akan hilang.')) this.submit();">
                     @csrf
                     <button type="submit" class="text-gray-400 hover:text-gray-600 transition-colors p-1 rounded-lg hover:bg-gray-100" title="Keluar">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,18 +108,40 @@
                 };
 
                 toast.className = `${colors[type]} text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 text-sm font-medium transform translate-x-full transition-transform duration-300 min-w-[280px]`;
-                toast.innerHTML = `
-                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">${icons[type]}</svg>
-                    <span>${message}</span>
-                `;
+                const svgEl = document.createElement('div');
+                svgEl.innerHTML = `<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">${icons[type]}</svg>`;
+                toast.appendChild(svgEl.firstElementChild);
+                const spanEl = document.createElement('span');
+                spanEl.textContent = message;
+                toast.appendChild(spanEl);
 
                 container.appendChild(toast);
                 requestAnimationFrame(() => toast.classList.remove('translate-x-full'));
 
-                setTimeout(() => {
+                // Add close button
+                const closeBtn = document.createElement('button');
+                closeBtn.innerHTML = '<svg class="w-4 h-4 ml-2 opacity-70 hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+                closeBtn.onclick = function() {
                     toast.classList.add('translate-x-full', 'opacity-0');
                     setTimeout(() => toast.remove(), 300);
-                }, 3000);
+                };
+                toast.appendChild(closeBtn);
+
+                // Duration: errors 5s, others 3s
+                const duration = type === 'error' ? 5000 : 3000;
+                let timer = setTimeout(() => {
+                    toast.classList.add('translate-x-full', 'opacity-0');
+                    setTimeout(() => toast.remove(), 300);
+                }, duration);
+
+                // Pause on hover
+                toast.addEventListener('mouseenter', () => clearTimeout(timer));
+                toast.addEventListener('mouseleave', () => {
+                    timer = setTimeout(() => {
+                        toast.classList.add('translate-x-full', 'opacity-0');
+                        setTimeout(() => toast.remove(), 300);
+                    }, 2000);
+                });
             };
         </script>
 
