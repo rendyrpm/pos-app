@@ -98,8 +98,7 @@
         </div>
 
         <!-- ==================== RIGHT PANEL: CART ==================== -->
-        <div class="w-full lg:w-[380px] xl:w-[420px] bg-white border-t lg:border-t-0 lg:border-l border-gray-200 flex flex-col shrink-0"
-             :class="{ 'h-[45svh] sm:h-[45svh] lg:h-full': cart.length > 0, 'h-auto lg:h-full': cart.length === 0 }">
+        <div class="w-full lg:w-[380px] xl:w-[420px] bg-white border-t lg:border-t-0 lg:border-l border-gray-200 flex flex-col shrink-0 lg:h-full">
 
             <!-- Cart Header -->
             <div class="px-4 py-3 border-b border-gray-100 flex items-center justify-between shrink-0 bg-white">
@@ -125,8 +124,8 @@
                 </button>
             </div>
 
-            <!-- Cart Items -->
-            <div class="flex-1 overflow-y-auto min-h-0 bg-gray-50/50">
+            <!-- Cart Items + Payment (scrollable on mobile, split on desktop) -->
+            <div class="flex-1 overflow-y-auto min-h-0 bg-gray-50/50 lg:flex lg:flex-col">
                 <!-- Empty Cart -->
                 <div x-show="cart.length === 0" class="flex flex-col items-center justify-center h-full text-center px-4 py-8">
                     <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-3">
@@ -190,10 +189,9 @@
                         </div>
                     </template>
                 </div>
-            </div>
 
             <!-- ==================== PAYMENT SECTION ==================== -->
-            <div class="border-t border-gray-200 bg-white lg:shrink-0 pb-2 pb-[env(safe-area-inset-bottom)]" x-show="cart.length > 0">
+            <div class="border-t border-gray-200 bg-white shrink-0 pb-2 pb-[env(safe-area-inset-bottom)] sticky bottom-0 lg:static lg:border-t lg:shadow-none shadow-[0_-4px_12px_rgba(0,0,0,0.08)] z-10" x-show="cart.length > 0">
                 <!-- Summary -->
                 <div class="px-4 pt-3 pb-2 space-y-2">
                     <div class="flex justify-between text-sm">
@@ -345,6 +343,7 @@
                     </button>
                 </div>
             </div>
+            </div><!-- end scrollable wrapper -->
         </div>
 
         <!-- ==================== RECEIPT MODAL ==================== -->
