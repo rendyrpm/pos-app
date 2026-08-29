@@ -19,7 +19,7 @@
                             x-model="searchQuery"
                             @input="searchProducts()"
                             placeholder="Cari produk (nama, SKU, atau scan barcode)..."
-                            class="block w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:bg-white transition-all"
+                            class="block w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:bg-white transition-all"
                         >
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center" x-show="searchQuery.length > 0">
                             <button @click="searchQuery = ''; searchProducts()" class="text-gray-400 hover:text-gray-600">
@@ -42,7 +42,7 @@
                     <button
                         @click="filterCategory(null)"
                         :class="selectedCategory === null ? 'bg-indigo-600 text-white shadow-sm' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-                        class="px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all shrink-0"
+                        class="px-4 py-2.5 min-h-[36px] rounded-full text-xs font-semibold whitespace-nowrap transition-all shrink-0"
                     >
                         Semua
                     </button>
@@ -50,7 +50,7 @@
                         <button
                             @click="filterCategory({{ $category->id }})"
                             :class="selectedCategory === {{ $category->id }} ? 'bg-indigo-600 text-white shadow-sm' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-                            class="px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all shrink-0"
+                            class="px-4 py-2.5 min-h-[36px] rounded-full text-xs font-semibold whitespace-nowrap transition-all shrink-0"
                         >
                             {{ $category->name }}
                             <span class="ml-1 opacity-70">{{ $category->products_count }}</span>
@@ -99,7 +99,7 @@
 
         <!-- ==================== RIGHT PANEL: CART ==================== -->
         <div class="w-full lg:w-[380px] xl:w-[420px] bg-white border-t lg:border-t-0 lg:border-l border-gray-200 flex flex-col shrink-0"
-             :class="{ 'h-[50vh] sm:h-[45vh] lg:h-full': cart.length > 0, 'h-auto lg:h-full': cart.length === 0 }">
+             :class="{ 'h-[45svh] sm:h-[45svh] lg:h-full': cart.length > 0, 'h-auto lg:h-full': cart.length === 0 }">
 
             <!-- Cart Header -->
             <div class="px-4 py-3 border-b border-gray-100 flex items-center justify-between shrink-0 bg-white">
@@ -119,7 +119,7 @@
                 <button
                     x-show="cart.length > 0"
                     @click="if(confirm('Yakin ingin mengosongkan keranjang?')) clearCart()"
-                    class="text-xs text-red-500 hover:text-red-700 font-medium px-2 py-1 rounded-lg hover:bg-red-50 transition-colors"
+                    class="text-xs text-red-500 hover:text-red-700 font-medium px-3 py-2 rounded-lg hover:bg-red-50 transition-colors min-h-[36px] flex items-center"
                 >
                     Kosongkan
                 </button>
@@ -135,7 +135,7 @@
                         </svg>
                     </div>
                     <p class="text-gray-400 text-sm font-medium">Belum ada item</p>
-                    <p class="text-gray-300 text-xs mt-1">Pilih produk dari daftar sebelah kiri</p>
+                    <p class="text-gray-300 text-xs mt-1">Pilih produk dari daftar di atas</p>
                 </div>
 
                 <!-- Cart Item List -->
@@ -162,7 +162,7 @@
                                 <div class="flex items-center gap-0 bg-gray-50 rounded-lg p-0.5">
                                     <button
                                         @click="decrementQty(index)"
-                                        class="w-8 h-8 flex items-center justify-center rounded-md bg-white text-gray-600 hover:bg-gray-100 active:scale-95 transition-all text-lg font-bold shadow-sm"
+                                        class="w-10 h-10 flex items-center justify-center rounded-md bg-white text-gray-600 hover:bg-gray-100 active:scale-95 transition-all text-lg font-bold shadow-sm"
                                     >-</button>
                                     <input
                                         type="number"
@@ -174,13 +174,13 @@
                                     >
                                     <button
                                         @click="incrementQty(index)"
-                                        class="w-8 h-8 flex items-center justify-center rounded-md bg-white text-gray-600 hover:bg-gray-100 active:scale-95 transition-all text-lg font-bold shadow-sm"
+                                        class="w-10 h-10 flex items-center justify-center rounded-md bg-white text-gray-600 hover:bg-gray-100 active:scale-95 transition-all text-lg font-bold shadow-sm"
                                         :class="{ 'opacity-30 cursor-not-allowed': item.quantity >= item.product.stock }"
                                     >+</button>
                                 </div>
                                 <button
                                     @click="removeFromCart(index)"
-                                    class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                                    class="w-9 h-9 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                                 >
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -193,7 +193,7 @@
             </div>
 
             <!-- ==================== PAYMENT SECTION ==================== -->
-            <div class="border-t border-gray-200 bg-white lg:shrink-0" x-show="cart.length > 0">
+            <div class="border-t border-gray-200 bg-white lg:shrink-0 pb-2 pb-[env(safe-area-inset-bottom)]" x-show="cart.length > 0">
                 <!-- Summary -->
                 <div class="px-4 pt-3 pb-2 space-y-2">
                     <div class="flex justify-between text-sm">
@@ -256,23 +256,23 @@
                                 @input="calculateChange()"
                                 min="0"
                                 placeholder="0"
-                                class="block w-full pl-10 pr-4 py-2.5 sm:py-3 text-lg font-bold border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:bg-white transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                class="block w-full pl-10 pr-4 py-3 sm:py-3 text-lg font-bold border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:bg-white transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             >
                         </div>
                     </div>
 
                     <!-- Quick Amount Buttons -->
                     <div class="grid grid-cols-4 gap-1.5">
-                        <button @click="setPaymentExact()" class="px-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100 active:scale-95 transition-all border border-indigo-100">
+                        <button @click="setPaymentExact()" class="px-2 py-2.5 sm:py-2.5 text-[11px] sm:text-xs font-semibold bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100 active:scale-95 transition-all border border-indigo-100">
                             Uang Pas
                         </button>
-                        <button @click="setPayment(50000)" class="px-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
+                        <button @click="setPayment(50000)" class="px-2 py-2.5 sm:py-2.5 text-[11px] sm:text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
                             50.000
                         </button>
-                        <button @click="setPayment(100000)" class="px-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
+                        <button @click="setPayment(100000)" class="px-2 py-2.5 sm:py-2.5 text-[11px] sm:text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
                             100.000
                         </button>
-                        <button @click="setPayment(200000)" class="px-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
+                        <button @click="setPayment(200000)" class="px-2 py-2.5 sm:py-2.5 text-[11px] sm:text-xs font-semibold bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 active:scale-95 transition-all border border-gray-200">
                             200.000
                         </button>
                     </div>

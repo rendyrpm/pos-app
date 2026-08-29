@@ -5,7 +5,7 @@
                 <h2 class="font-bold text-2xl text-gray-800 leading-tight">Dashboard</h2>
                 <p class="mt-1 text-sm text-gray-500">{{ now()->translatedFormat('l, d F Y') }}</p>
             </div>
-            <a href="{{ route('pos.index') }}" class="inline-flex items-center px-5 py-2.5 bg-blue-600 border border-transparent rounded-xl text-sm font-semibold text-white hover:bg-blue-700 transition shadow-sm">
+            <a href="{{ route('pos.index') }}" class="inline-flex items-center px-5 py-3 bg-blue-600 border border-transparent rounded-xl text-sm font-semibold text-white hover:bg-blue-700 transition shadow-sm">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 Buka POS
             </a>
@@ -117,7 +117,7 @@
                                     $isToday = $date->isToday();
                                 @endphp
                                 <div class="flex-1 flex flex-col items-center justify-end h-full">
-                                    <div class="text-[10px] font-semibold {{ $isToday ? 'text-blue-600' : 'text-gray-500' }} mb-1 opacity-0 hover:opacity-100 transition">
+                                    <div class="text-[11px] sm:text-xs font-semibold {{ $isToday ? 'text-blue-600' : 'text-gray-500' }} mb-1 opacity-100 md:opacity-0 md:hover:opacity-100 transition">
                                         Rp {{ number_format($day['total'], 0, ',', '.') }}
                                     </div>
                                     <div class="w-full rounded-t-lg transition-all duration-500 cursor-pointer {{ $isToday ? 'bg-blue-500 hover:bg-blue-600' : 'bg-blue-300 hover:bg-blue-400' }}"
@@ -125,7 +125,7 @@
                                     <div class="text-[11px] {{ $isToday ? 'font-bold text-blue-600' : 'text-gray-400' }} mt-2">
                                         {{ $date->format('D') }}
                                     </div>
-                                    <div class="text-[10px] {{ $isToday ? 'text-blue-600' : 'text-gray-400' }}">
+                                    <div class="text-[11px] sm:text-xs {{ $isToday ? 'text-blue-600' : 'text-gray-400' }}">
                                         {{ $date->format('d/m') }}
                                     </div>
                                 </div>
@@ -194,9 +194,9 @@
                                     <div class="text-right shrink-0">
                                         <p class="text-sm font-semibold text-emerald-600">Rp {{ number_format($sale->total, 0, ',', '.') }}</p>
                                         @if($sale->payment_method === 'qris')
-                                            <span class="text-[10px] font-semibold text-blue-600">QRIS</span>
+                                            <span class="text-[11px] sm:text-xs font-semibold text-blue-600">QRIS</span>
                                         @else
-                                            <span class="text-[10px] font-semibold text-green-600">Tunai</span>
+                                            <span class="text-[11px] sm:text-xs font-semibold text-green-600">Tunai</span>
                                         @endif
                                     </div>
                                 </a>
@@ -234,9 +234,9 @@
                                     </div>
                                     <div class="shrink-0">
                                         @if($product->stock === 0)
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-100 text-red-700">Habis</span>
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold bg-red-100 text-red-700">Habis</span>
                                         @else
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-100 text-amber-700">Menipis</span>
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold bg-amber-100 text-amber-700">Menipis</span>
                                         @endif
                                     </div>
                                 </div>
